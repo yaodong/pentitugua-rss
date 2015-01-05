@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 wget http://www.dapenti.com/blog/rssfortugua.asp -O rss.xml
 if [ -n "$(git status rss.xml --porcelain)" ]; then
-  git add rss.xml
-  git commit -m "update at $(date "+%Y-%m-%d %H:%M:%S")"
+  date=$(date "+%Y-%m-%d %H:%M:%S")
+  sed "s/<small><\/small>/<small>$date<\/small>/" index.html
+  git add rss.xml index.html
+  git commit -m "update at $data"
   git push
 fi
