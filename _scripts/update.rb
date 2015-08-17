@@ -18,7 +18,7 @@ links.each do |link|
     month = "0#{month}" if month.length < 2
 
     # post file path
-    file = "#{__dir__}/_posts/#{year}-#{month}-#{day}-#{year}#{month}#{day}.md"
+    file = "#{__dir__}/../_posts/#{year}-#{month}-#{day}-#{year}#{month}#{day}.md"
 
     unless File.exist? file
       url       = "#{base_url}/#{link['href']}"
@@ -29,6 +29,7 @@ links.each do |link|
       content   += "layout: post\n"
       content   += "title: \"#{link.text}\"\n"
       content   += "date: #{date_time}\n"
+      content   += "link: #{url}\n"
       content   += "---\n\n"
       content   += article.css('div.oblog_text').first.to_s.encode('utf-8')
 

@@ -6,7 +6,7 @@ baseurl: ""
 url: "http://pentitugua.com" # the base hostname & protocol for your site
 twitter_username: jekyllrb
 github_username:  jekyll
-permalink: none
+permalink: posts/:title.html
 
 # Build settings
 markdown: kramdown
