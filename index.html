@@ -1,23 +1,11 @@
 ---
 layout: default
+title: 喷嚏图卦 RSS
 ---
-
 <div class="home">
-
-  <h1 class="page-heading">Posts</h1>
-
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/rss.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
+    <div class="statement">
+        <a href="/archive.html">历史存档</a><br />
+        <a href="{{ '/rss.xml' | prepend: site.baseurl }}">RSS 订阅</a><br />
+        <a href="https://www.dapenti.com/blog/index.asp">喷嚏网</a><br />
+    </div>
 </div>
