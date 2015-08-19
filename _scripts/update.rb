@@ -23,7 +23,7 @@ base_url  = 'https://www.dapenti.com/blog'
 list_url  = "#{base_url}/blog.asp?subjectid=70&name=xilei"
 keyword   = '喷嚏图卦'
 
-list_html = Nokogiri::HTML(read_url(list_url))
+list_html = Nokogiri::HTML(read_url(list_url), nil, 'gbk')
 links = list_html.css 'div[align="left"] ul li a'
 links.each do |link|
   if link.text.include? keyword
