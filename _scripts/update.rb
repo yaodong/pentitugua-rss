@@ -19,14 +19,20 @@ def read_url(url)
   response.body
 end
 
+def is_tg_link(link)
+  return false unless link.text =~ /喷嚏图卦\s?\d+/
+  return false unless link['href'].include? 'more.asp?name=xilei&id='
+
+  true
+end
+
 base_url  = 'https://www.dapenti.com/blog'
-list_url  = "#{base_url}/blog.asp?subjectid=70&name=xilei"
-keyword   = '喷嚏图卦'
+list_url  = "#{base_url}/index.asp"
 
 list_html = Nokogiri::HTML(read_url(list_url), nil, 'gbk')
-links = list_html.css 'div[align="left"] ul li a'
+links = list_html.css 'a'
 links.each do |link|
-  if link.text.include? keyword
+  if is_tg_link(link)
 
     # parse date
     date_str = link.text[/2\d+/]
@@ -38,7 +44,7 @@ links.each do |link|
 
     unless File.exist? file
 
-      puts "Downloading #{link.text}."
+      puts "Downloading #{link['title']}."
 
       url       = "#{base_url}/#{link['href']}"
       article   = Nokogiri::HTML(read_url(url), nil, 'gbk')
@@ -46,7 +52,7 @@ links.each do |link|
 
       content   = "---\n"
       content   += "layout: post\n"
-      content   += "title: \"#{link.text}\"\n"
+      content   += "title: \"#{link['title']}\"\n"
       content   += "date: #{date_time}\n"
       content   += "link: #{url.gsub('https', 'http')}\n"
       content   += "---\n\n"
