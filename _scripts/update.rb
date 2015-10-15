@@ -40,7 +40,7 @@ links.each do |link|
     month = "0#{month}" if month.length < 2
 
     # post file path
-    file = "#{__dir__}/../_posts/#{year}-#{month}-#{day}-#{year}#{month}#{day}.md"
+    file = "#{__dir__}/../_posts/#{year}/#{year}-#{month}-#{day}-#{year}#{month}#{day}.md"
 
     unless File.exist? file
 
