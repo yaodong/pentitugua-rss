@@ -12,7 +12,7 @@ class Newsboy
   TITLE_KEYWORD = /喷嚏图卦\s?\d+/
   LINK_KEYWORD  = 'more.asp'
   BASE_URL = 'https://www.dapenti.com/blog'
-  LIST_URL = "#{base_url}/index.asp"
+  LIST_URL = "#{BASE_URL}/index.asp"
 
   def work
     links = find_article_links
@@ -60,7 +60,7 @@ class Newsboy
     content   += "---\n\n"
     content   += article.css('div.oblog_text').first.to_s.encode('utf-8')
 
-    content = download_image(content)
+    #content = download_image(content)
 
     File.write post_file, content
   end

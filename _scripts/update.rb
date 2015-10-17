@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require './newsboy.rb'
+require_relative 'newsboy.rb'
 
 Newsboy.new.work
