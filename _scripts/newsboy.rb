@@ -32,7 +32,7 @@ class Newsboy
 
   def download_article(link)
     year, month, day = parse_date(link)
-    post_file = "#{__dir__}/../_posts/#{year}/#{year}-#{month}-#{day}-#{year}#{month}#{day}.md"
+    post_file = "#{__dir__}/../_posts/#{year}/#{year}-#{month}-#{day}-#{year}#{month}#{day}.html"
     download_to_file(link, post_file) unless File.exist?(post_file)
   end
 
