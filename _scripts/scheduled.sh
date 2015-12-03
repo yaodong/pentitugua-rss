@@ -4,6 +4,8 @@ DIR=$(dirname $0)
 
 cd $DIR
 
+bundle
+
 git config --local user.name 'newsboy'
 git config --local user.email 'newsboy@pentitutgua.com'
 
