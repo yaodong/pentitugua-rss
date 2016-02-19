@@ -9,7 +9,7 @@ require 'fileutils'
 
 class Newsboy
 
-  TITLE_KEYWORD = /喷嚏图卦\s?\d+/
+  TITLE_PATTERN = /喷嚏图卦\s*\d{8}/
   LINK_KEYWORD  = 'more.asp'
   BASE_URL = 'https://www.dapenti.com/blog'
   LIST_URL = "#{BASE_URL}/index.asp"
@@ -26,7 +26,7 @@ class Newsboy
   def find_article_links
     list_html = Nokogiri::HTML(read_url(LIST_URL), nil, 'gbk')
     list_html.css('a').select do |link|
-      link.text =~ TITLE_KEYWORD && link['href'].include?(LINK_KEYWORD)
+      link.text =~ TITLE_PATTERN && link['href'].include?(LINK_KEYWORD)
     end
   end
 
