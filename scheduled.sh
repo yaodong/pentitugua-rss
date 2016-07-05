@@ -16,9 +16,9 @@ git fetch origin
 git reset --hard origin/master
 
 pip install -r requirements.txt
-python ./update.py
+python ./manager.py crawler
 
-git add jekyll/_posts
+git add .
 git commit -m "update at $(date '+%Y-%m-%d %H:%M:%S')"
 git push -u origin master
 
@@ -36,10 +36,7 @@ git fetch origin
 git reset --hard origin/gh-pages
 cd ..
 
-cd ./jekyll
-bundle
-bundle exec jekyll build --incremental -d ../gh-pages
-cd ..
+python ./manager.py build
 
 cd ./gh-pages
 git add .
