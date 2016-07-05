@@ -29,6 +29,7 @@ git push -u origin master
 
 if [ ! -d gh-pages ]; then
   git clone git@github.com:yaodong/pentitugua-rss.git gh-pages
+  git checkout -b gh-pages origin/gh-pages
 fi
 
 cd ./gh-pages
