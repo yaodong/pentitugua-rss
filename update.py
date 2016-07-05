@@ -14,7 +14,7 @@ def get_page(url):
     response = requests.get(url)
     if response.status_code != 200:
         raise Exception('Failed to fetch page: %s' % url)
-    return BeautifulSoup(response.content, 'lxml', from_encoding='gb2312')
+    return BeautifulSoup(response.content, 'html.parser', from_encoding='gb2312')
 
 
 def find_articles():
