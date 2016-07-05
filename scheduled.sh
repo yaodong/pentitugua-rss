@@ -7,6 +7,7 @@ cd $DIR
 git config --local user.name 'newsboy'
 git config --local user.email 'newsboy@pentitutgua.com'
 
+
 # ==================
 #  collect articles
 # ==================
@@ -14,6 +15,7 @@ git config --local user.email 'newsboy@pentitutgua.com'
 git fetch origin
 git reset --hard origin/master
 
+pip install -r requirements.txt
 python ./update.py
 
 git add jekyll/_posts
