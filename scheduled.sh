@@ -38,7 +38,7 @@ cd ..
 
 cd ./jekyll
 bundle
-bundle exec jekyll build -d ../gh-pages
+bundle exec jekyll build --incremental -d ../gh-pages
 cd ..
 
 cd ./gh-pages

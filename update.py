@@ -1,13 +1,20 @@
-import requests
-import re
-from os import path
 from bs4 import BeautifulSoup
+from glob import glob
+from os import path, makedirs
+from rfeed import Feed, Item, Guid
+from datetime import datetime
+import shutil
+import re
+import requests
+import yaml
+
 
 BASE_PATH = path.dirname(__file__)
 BASE_URL = 'https://www.dapenti.com/blog/'
 LIST_URL = '%sblog.asp?name=xilei&subjectid=70' % BASE_URL
 ARTICLE_URL_PATTERN = 'more\.asp\?name=xilei&id=\d+'
 ARTICLE_TITLE_PATTERN = '喷嚏图卦\s*(\d{8})'
+JEKYLL_POSTS_DIR = path.join(BASE_PATH, 'jekyll', '_posts')
 
 
 def get_page(url):
@@ -32,7 +39,7 @@ def find_articles():
         date = found.group(1)
         date = [date[0:4], date[4:6], date[6:]]
 
-        post_file = path.join(BASE_PATH, 'jekyll', '_posts', date[0], '%s-%s-%s-%s.html' % (date[0], date[1], date[2], ''.join(date)))
+        post_file = path.join(BASE_PATH, 'posts', '%s/%s/%s.html' % (date[0], date[1], date[2]))
 
         if not path.isfile(post_file):
             articles.append({
@@ -67,15 +74,63 @@ def collect_article(article):
 
     post_contents = '\n'.join(front_matters) + '\n\n' + content.decode().replace('\r\n', '\n')
 
+    post_dir = path.dirname(article['file'])
+    if not path.isdir(post_dir):
+        makedirs(post_dir)
     with open(article['file'], 'w') as f:
         f.write(post_contents)
+
+
+def build():
+    if path.isdir(JEKYLL_POSTS_DIR):
+        shutil.rmtree(JEKYLL_POSTS_DIR)
+
+    files = sorted(glob('posts/*/*/*.html'))[-1:]
+    feed_items = []
+    for file in files:
+        post_data = read_data(file)
+        feed_items.append(Item(
+            title=post_data['front_matters']['title'],
+            link=post_data['front_matters']['link'],
+            description=post_data['content'],
+            author='喷嚏网',
+            guid=Guid(post_data['front_matters']['link']),
+            pubDate=post_data['front_matters']['date']
+        ))
+
+    feed_items.reverse()
+    feed = Feed(
+        title="喷嚏图卦",
+        link="http://www.pentitugua.com/rss.xml",
+        description="【喷嚏图卦】喷嚏网(www.dapenti.com)-阅读、发现和分享：8小时外的健康生活！",
+        language="zh-CN",
+        lastBuildDate=datetime.now(),
+        items=feed_items)
+
+    with open('gh-pages/rss.xml', 'w') as f:
+        f.write(feed.rss())
+
+    shutil.copy('templates/index.html', 'gh-pages/index.html')
+    shutil.copy('templates/CNAME', 'gh-pages/CNAME')
+
+
+def read_data(file):
+    with open(path.join(BASE_PATH, file)) as f:
+        matches = re.match('(?sm)^---(?P<meta>.*?)^---(?P<body>.*)', f.read())
+        front_matters = yaml.load(matches.group(1))
+        content = matches.group(2)
+
+    return {
+        'front_matters': front_matters,
+        'content': content
+    }
 
 
 def main():
     articles = find_articles()
     for article in articles:
         collect_article(article)
-
+    build()
 
 if __name__ == '__main__':
     main()

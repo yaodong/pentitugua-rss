@@ -1,1 +1,2 @@
 beautifulsoup4==4.4.1
+rfeed==1.1.1
