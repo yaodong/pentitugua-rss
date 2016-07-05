@@ -105,7 +105,7 @@ def generate_feed():
         link="http://www.pentitugua.com/rss.xml",
         description="【喷嚏图卦】喷嚏网(www.dapenti.com)-阅读、发现和分享：8小时外的健康生活！",
         language="zh-CN",
-        lastBuildDate=datetime.now(),
+        lastBuildDate=feed_items[0].pubDate,
         items=feed_items)
 
     with open('gh-pages/rss.xml', 'w') as f:
