@@ -13,7 +13,7 @@ git config --local user.email 'newsboy@pentitutgua.com'
 # ==================
 
 git fetch origin
-git reset --hard origin/master
+#git reset --hard origin/master
 
 pip install -r requirements.txt
 python ./manager.py crawler
@@ -34,6 +34,7 @@ if [ ! -d gh-pages ]; then
 fi
 
 cd $DIR
+echo $DIR
 cd ./gh-pages
 git fetch origin
 git reset --hard origin/gh-pages
