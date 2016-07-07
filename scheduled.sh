@@ -16,7 +16,7 @@ git fetch origin
 git reset --hard origin/master
 
 pip install -r requirements.txt
-python ./manager.py crawler
+python ./manager.py download
 
 git add .
 git commit -m "update at $(date '+%Y-%m-%d %H:%M:%S')"
