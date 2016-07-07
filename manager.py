@@ -22,7 +22,9 @@ def get_url(url):
     response = requests.get(url)
     if response.status_code != 200:
         raise Exception('Failed to fetch page: %s' % url)
-    return BeautifulSoup(response.content, 'html.parser', from_encoding=TARGET_ENCODING)
+    response.encoding = TARGET_ENCODING
+
+    return BeautifulSoup(response.text, 'html.parser')
 
 
 def find_available_articles():
