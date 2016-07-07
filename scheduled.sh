@@ -4,13 +4,12 @@ DIR=$(dirname $0)
 
 cd $DIR
 
-git config --local user.name 'newsboy'
-git config --local user.email 'newsboy@pentitutgua.com'
-
-
 # ==================
 #  collect articles
 # ==================
+
+git config --local user.name 'newsboy'
+git config --local user.email 'newsboy@pentitutgua.com'
 
 git fetch origin
 git reset --hard origin/master
@@ -34,8 +33,13 @@ if [ ! -d gh-pages ]; then
 fi
 
 cd ./gh-pages
+
+git config --local user.name 'newsboy'
+git config --local user.email 'newsboy@pentitutgua.com'
+
 git fetch origin
 git reset --hard origin/gh-pages
+
 cd ..
 
 python ./manager.py build
