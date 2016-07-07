@@ -26,22 +26,22 @@ git push -u origin master
 # ==================
 #  render jekyll site
 # ==================
-cd $DIR
 if [ ! -d gh-pages ]; then
   git clone git@github.com:yaodong/pentitugua-rss.git gh-pages
   cd ./gh-pages
   git checkout -b gh-pages origin/gh-pages
+  cd ..
 fi
 
-cd $DIR
 cd ./gh-pages
 git fetch origin
 git reset --hard origin/gh-pages
+cd ..
 
-cd $DIR
 python ./manager.py build
 
 cd ./gh-pages
 git add .
 git commit -m "update at $(date '+%Y-%m-%d %H:%M:%S')"
 git push -u origin gh-pages
+cd ..
