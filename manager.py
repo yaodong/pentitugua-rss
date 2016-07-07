@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 from glob import glob
 from os import path, makedirs
 from rfeed import Feed, Item, Guid
-from datetime import datetime
 import shutil
 import re
 import requests
@@ -88,7 +87,7 @@ def generate_feed():
     if path.isdir(JEKYLL_POSTS_DIR):
         shutil.rmtree(JEKYLL_POSTS_DIR)
 
-    files = sorted(glob('posts/*/*/*.html'))[-1:]
+    files = sorted(glob('posts/*/*/*.html'))[-3:]
     feed_items = []
     for file in files:
         post_data = read_data(file)
