@@ -109,8 +109,12 @@ def generate_feed():
         lastBuildDate=feed_items[0].pubDate,
         items=feed_items)
 
+    rss = feed.rss()
+    # force order attributes
+    rss = re.sub('<rss[^>]+>', '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">', rss)
+
     with open('gh-pages/rss.xml', 'w') as f:
-        f.write(feed.rss())
+        f.write(rss)
 
     for file in ['index.html', 'CNAME']:
         shutil.copy(path.join(BASE_PATH, 'templates', file), path.join(BASE_PATH, 'gh-pages', file))
@@ -134,7 +138,7 @@ def cli():
 
 
 @cli.command()
-def crawler():
+def download():
     for article in find_available_articles():
         download_article(article)
 
