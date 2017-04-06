@@ -14,14 +14,14 @@ LIST_URL = '%sblog.asp?name=xilei&subjectid=70' % BASE_URL
 ARTICLE_URL_PATTERN = 'more\.asp\?name=xilei&id=\d+'
 ARTICLE_TITLE_PATTERN = '喷嚏图卦\s*(\d{8})'
 JEKYLL_POSTS_DIR = path.join(BASE_PATH, 'jekyll', '_posts')
-TARGET_ENCODING = 'gb2312'
+RESPONSE_ENCODING = 'gbk'
 
 
 def get_url(url):
     response = requests.get(url)
     if response.status_code != 200:
         raise Exception('Failed to fetch page: %s' % url)
-    response.encoding = TARGET_ENCODING
+    response.encoding = RESPONSE_ENCODING
 
     return BeautifulSoup(response.text, 'html.parser')
 
