@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-if [! -d /srv/pentitugua ]; then
+if [ ! -d /srv/pentitugua ]; then
     git clone git@github.com:yaodong/pentitugua-rss.git /srv/pentitugua
 fi
 
 if [ ! -d /srv/gh-pages ]; then
-    git clone git@github.com:yaodong/pentitugua-rss.git /srv/gh-pages
-    git checkout -b gh-pages origin/gh-pages
+    git clone -b gh-pages --single-branch git@github.com:yaodong/pentitugua-rss.git /srv/gh-pages
 fi
 
 while true;
