@@ -2,50 +2,33 @@
 
 DIR=$(dirname $0)
 
-cd $DIR
+while sleep 1800: do
+    cd $DIR
 
-# ==================
-#  collect articles
-# ==================
+    git fetch origin
+    git reset --hard origin/master
 
-git config --local user.name 'newsboy'
-git config --local user.email 'newsboy@pentitutgua.com'
+    python3 manage.py download
 
-git fetch origin
-git reset --hard origin/master
+    git add .
+    git commit -m "update at $(date '+%Y-%m-%d %H:%M:%S')"
+    git push -u origin master
 
-pip install -r requirements.txt
-python ./manager.py download
+    if [ ! -d /srv/gh-pages ]; then
+        git clone git@github.com:yaodong/pentitugua-rss.git /srv/gh-pages
+        git checkout -b gh-pages origin/gh-pages
+    fi
 
-git add .
-git commit -m "update at $(date '+%Y-%m-%d %H:%M:%S')"
-git push -u origin master
+    cd /srv/gh-pages
+    git fetch origin
+    git reset --hard origin/gh-pages
 
+    cd /srv/pentitugua
+    python3 manage.py build
 
-# ==================
-#  render jekyll site
-# ==================
-if [ ! -d gh-pages ]; then
-  git clone git@github.com:yaodong/pentitugua-rss.git gh-pages
-  cd ./gh-pages
-  git checkout -b gh-pages origin/gh-pages
-  cd ..
-fi
+    cd /srv/gh-pages
+    git add .
+    git commit -m "update at $(date '+%Y-%m-%d %H:%M:%S')"
+    git push -u origin gh-pages
 
-cd ./gh-pages
-
-git config --local user.name 'newsboy'
-git config --local user.email 'newsboy@pentitutgua.com'
-
-git fetch origin
-git reset --hard origin/gh-pages
-
-cd ..
-
-python ./manager.py build
-
-cd ./gh-pages
-git add .
-git commit -m "update at $(date '+%Y-%m-%d %H:%M:%S')"
-git push -u origin gh-pages
-cd ..
+done
