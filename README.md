@@ -10,7 +10,7 @@ Install docker.
 Download `Dockerfile`:
 
 ```
-wget https://github.com/yaodong/pentitugua-rss/blob/master/Dockerfile
+wget https://raw.githubusercontent.com/yaodong/pentitugua-rss/master/Dockerfile
 ```
 
 Build container:
