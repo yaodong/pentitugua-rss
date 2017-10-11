@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 
 RUN apt-get update -qq && apt-get install -qq python3 python3-pip git -y
+RUN pip3 install -U pip
 
 RUN ["git", "config", "--global", "user.name", "newsboy"]
 RUN ["git", "config", "--global", "user.email", "newsboy@pentitutgua.com"]
@@ -13,12 +14,6 @@ RUN ["ssh-agent", "bash", "-c", "ssh-add /root/.ssh/id_rsa"]
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 
-ENV UPDATED_AT=1507740121
-RUN git clone git@github.com:yaodong/pentitugua-rss.git /srv/pentitugua
+COPY scheduled.sh /root/scheduled.sh
 
-WORKDIR /srv/pentitugua
-
-RUN pip3 install -U pip
-RUN pip3 --no-cache-dir install -r requirements.txt
-
-CMD ["bash", "scheduled.sh"]
+CMD ["bash", "/root/scheduled.sh"]
