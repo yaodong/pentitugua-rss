@@ -77,6 +77,8 @@ def download_article(article):
 
     post_contents = '\n'.join(front_matters) + '\n\n' + content.decode().replace('\r\n', '\n')
 
+    print('download {0}'.format(article['date']))
+
     post_dir = path.dirname(article['file'])
     if not path.isdir(post_dir):
         makedirs(post_dir)
