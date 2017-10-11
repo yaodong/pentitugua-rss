@@ -14,6 +14,6 @@ RUN ["ssh-agent", "bash", "-c", "ssh-add /root/.ssh/id_rsa"]
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 
-COPY scheduled.sh /root/scheduled.sh
+COPY https://raw.githubusercontent.com/yaodong/pentitugua-rss/master/scheduled.sh /root/scheduled.sh
 
 CMD ["bash", "/root/scheduled.sh"]
