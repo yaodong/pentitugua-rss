@@ -9,6 +9,7 @@ import yaml
 import click
 
 BASE_PATH = path.dirname(__file__)
+BUILD_PATH = '/srv/gh-pages'
 BASE_URL = 'https://www.dapenti.com/blog/'
 LIST_URL = '%sblog.asp?name=xilei&subjectid=70' % BASE_URL
 ARTICLE_URL_PATTERN = 'more\.asp\?name=xilei&id=\d+'
@@ -113,11 +114,11 @@ def generate_feed():
     # force order attributes
     rss = re.sub('<rss[^>]+>', '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">', rss)
 
-    with open('gh-pages/rss.xml', 'w') as f:
+    with open(path.join(BUILD_PATH, 'rss.xml'), 'w') as f:
         f.write(rss)
 
     for file in ['index.html', 'CNAME']:
-        shutil.copy(path.join(BASE_PATH, 'templates', file), path.join(BASE_PATH, 'gh-pages', file))
+        shutil.copy(path.join(BASE_PATH, 'templates', file), path.join(BUILD_PATH, file))
 
 
 def read_data(file):
