@@ -1,2 +1,5 @@
 /gh-pages
 .sass-cache
+keys/
+!keys/.gitkeep
+
